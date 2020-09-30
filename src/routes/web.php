@@ -24,6 +24,9 @@ Route::namespace('Omatech\Mage\App\Http\Controllers')
                 $auth->get('login', 'LoginController@showLoginForm')->name('login.index');
                 $auth->post('login', 'LoginController@login')->name('login');
 
+                $auth->get('2fa', 'TwoFactorController@showLoginForm')->name('login.index');
+                $auth->post('2fa', 'TwoFactorController@login')->name('login');
+
                 if (config('mage.enable_register_route')) {
                     $auth->get('register', 'RegisterController@showRegistrationForm')->name('register.index');
                     $auth->post('register', 'RegisterController@register')->name('register');
@@ -43,9 +46,9 @@ Route::namespace('Omatech\Mage\App\Http\Controllers')
          * LoggedIn Routes
          */
         $route->middleware(['mageRedirectIfNotAuthenticated', 'checkForPermissions:mage-access'])
-        
+
             ->group(function ($logged) {
-              
+
                 /*
                  * Dashboard
                  */
@@ -106,7 +109,7 @@ Route::namespace('Omatech\Mage\App\Http\Controllers')
                  * Sidebar
                  */
                 $logged->post('sidebar/toggle', 'SidebarController@toggle')->name('sidebar.toggle');
-                
+
                 /**
                  * Vault
                  */
